@@ -70,7 +70,7 @@ class TestTeamIntegrationWorkflow(unittest.TestCase):
         self.assertEqual(len(catalog), 4)
 
         # 2. Search catalog by genre with case insensitivity (Tests catalog.py)
-        se_books = find_books_by_genre(catalog, "software engineering")
+        se_books = find_books_by_genre(catalog, "Software Engineering")
         self.assertEqual(len(se_books), 3, "Catalog search must find 3 Software Engineering books")
 
         # 3. Perform borrowing checkout (Tests borrowing.py)

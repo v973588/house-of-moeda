@@ -30,7 +30,7 @@ def validate_book(book: Dict[str, Any]) -> bool:
     if not isinstance(book["title"], str) or not book["title"].strip().lower():
         raise ValueError("Field 'title' cannot be empty")
 
-    if not isinstance(book["author"], str) or not book["author"].strip():
+    if not isinstance(book["author"], str) or not book["author"].strip().lower():
         raise ValueError("Field 'author' cannot be empty")
 
     if not isinstance(book["year"], int) or book["year"] <= 0:
@@ -84,4 +84,6 @@ def calculate_average_year(books: List[Dict[str, Any]]) -> float:
     """
     # BUG #1B: Missing empty check crashes, and integer division loses precision!
     total_years = sum(book.get("year", 0) for book in books)
+    if not books:
+        return 0.0
     return total_years / len(books)

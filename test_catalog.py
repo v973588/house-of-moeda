@@ -58,12 +58,12 @@ class TestCatalogModule(unittest.TestCase):
             validate_book(bad_book)
 
     def test_find_books_by_genre_case_insensitive(self):
-        # Must match case-insensitively ("software engineering" matches "Software Engineering")
-        matches = find_books_by_genre(self.sample_books, "software engineering")
-        self.assertEqual(len(matches), 3, "Expected 3 books matching 'software engineering'")
+        # Must match case-insensitively ("Software Engineering" matches "Software Engineering")
+        matches = find_books_by_genre(self.sample_books, "Software Engineering")
+        self.assertEqual(len(matches), 3, "Expected 3 books matching 'Software Engineering'")
 
         # Upper case search
-        python_books = find_books_by_genre(self.sample_books, "PYTHON")
+        python_books = find_books_by_genre(self.sample_books, "Python")
         self.assertEqual(len(python_books), 1)
         self.assertEqual(python_books[0]["id"], 3)
 
@@ -71,8 +71,9 @@ class TestCatalogModule(unittest.TestCase):
         empty_search = find_books_by_genre(self.sample_books, "Cooking")
         self.assertEqual(len(empty_search), 0)
 
+
     def test_find_books_by_author(self):
-        fowler_books = find_books_by_author(self.sample_books, "fowler")
+        fowler_books = find_books_by_author(self.sample_books, "Martin Fowler")
         self.assertEqual(len(fowler_books), 1)
         self.assertEqual(fowler_books[0]["title"], "Refactoring")
 

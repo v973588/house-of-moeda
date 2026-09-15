@@ -1,13 +1,3 @@
-"""
-Borrowing Module (Module 3) - STARTER CODE (Contains Bug #3)
-Responsible: Developer 3 / Branch: fix/borrowing
-
-BUG DESCRIPTION:
-`checkout_book` correctly creates the transaction receipt, but FORGETS to set
-`target_book["is_available"] = False`!
-Because of this, the book remains marked as available on the shelf even after being checked out.
-"""
-
 from typing import List, Dict, Any, Optional
 
 
@@ -18,9 +8,6 @@ def checkout_book(
 ) -> Dict[str, Any]:
     """
     Check out a book to a borrower.
-
-    TODO (Dev 3): Fix availability update!
-    Remember to update target_book["is_available"] = False when checked out.
     """
     if not borrower_name or not borrower_name.strip():
         raise ValueError("Borrower name cannot be empty")
@@ -35,9 +22,12 @@ def checkout_book(
         raise ValueError(f"Book with ID {book_id} not found in catalog")
 
     if not target_book.get("is_available", False):
-        raise ValueError(f"Book '{target_book.get('title')}' (ID: {book_id}) is currently unavailable")
+        raise ValueError(
+            f"Book '{target_book.get('title')}' (ID: {book_id}) is currently unavailable"
+        )
 
-    # BUG #3: Forgot to toggle target_book["is_available"] = False!
+    # Fix: mark the book as unavailable after checkout
+    target_book["is_available"] = False
     target_book["borrower"] = borrower_name.strip()
 
     return {
@@ -62,7 +52,9 @@ def return_book(books: List[Dict[str, Any]], book_id: int) -> Dict[str, Any]:
         raise ValueError(f"Book with ID {book_id} not found in catalog")
 
     if target_book.get("is_available", False) is True:
-        raise ValueError(f"Book '{target_book.get('title')}' (ID: {book_id}) is already in library (not checked out)")
+        raise ValueError(
+            f"Book '{target_book.get('title')}' (ID: {book_id}) is already in library (not checked out)"
+        )
 
     former_borrower = target_book.pop("borrower", "Unknown")
     target_book["is_available"] = True
