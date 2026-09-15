@@ -84,4 +84,6 @@ def calculate_average_year(books: List[Dict[str, Any]]) -> float:
     """
     # BUG #1B: Missing empty check crashes, and integer division loses precision!
     total_years = sum(book.get("year", 0) for book in books)
+    if not books:
+        return 0.0
     return total_years / len(books)
