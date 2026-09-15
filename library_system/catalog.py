@@ -27,7 +27,7 @@ def validate_book(book: Dict[str, Any]) -> bool:
     if not isinstance(book["id"], int) or book["id"] <= 0:
         raise ValueError("Field 'id' must be a positive integer")
 
-    if not isinstance(book["title"], str) or not book["title"].strip():
+    if not isinstance(book["title"], str) or not book["title"].strip().lower():
         raise ValueError("Field 'title' cannot be empty")
 
     if not isinstance(book["author"], str) or not book["author"].strip():
@@ -50,14 +50,14 @@ def find_books_by_genre(books: List[Dict[str, Any]], genre: str) -> List[Dict[st
     Currently this only matches if the case matches exactly.
     Make it match case-insensitively (e.g. 'software engineering' should match 'Software Engineering').
     """
-    if not genre or not genre.strip():
+    if not genre or not genre.strip().lower():
         return []
 
     # BUG #1A: Exact match fails when user searches with lowercase or uppercase!
     # Expected: compare normalized strings using .lower()
     return [
         book for book in books
-        if genre in book.get("genres", [])
+        if genre in book.get("genres", []).strip().lower()
     ]
 
 
@@ -65,13 +65,13 @@ def find_books_by_author(books: List[Dict[str, Any]], author_query: str) -> List
     """
     Find all books whose author contains the query string (case-insensitive substring match).
     """
-    if not author_query or not author_query.strip():
+    if not author_query or not author_query.strip().lower():
         return []
 
     target = author_query.strip().lower()
     return [
         book for book in books
-        if target in book.get("author", "").lower()
+        if target in book.get("author", "").lower().strip() #.strip().lower():
     ]
 
 
@@ -84,4 +84,4 @@ def calculate_average_year(books: List[Dict[str, Any]]) -> float:
     """
     # BUG #1B: Missing empty check crashes, and integer division loses precision!
     total_years = sum(book.get("year", 0) for book in books)
-    return total_years // len(books)
+    return total_years / len(books)

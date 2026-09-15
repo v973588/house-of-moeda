@@ -22,8 +22,8 @@ def generate_library_summary(books: List[Dict[str, Any]]) -> Dict[str, Any]:
     total = len(books)
 
     # BUG #4: Inverted boolean logic!
-    available = sum(1 for b in books if b.get("is_available", False) is False)
-    borrowed = sum(1 for b in books if b.get("is_available", False) is True)
+    available = sum(1 for b in books if b.get("is_available", False) is True)
+    borrowed = sum(1 for b in books if b.get("is_available", False) is False)
 
     total_years = sum(book.get("year", 0) for book in books)
     avg_year = float(total_years / total) if total > 0 else 0.0
