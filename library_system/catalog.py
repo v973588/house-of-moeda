@@ -57,7 +57,7 @@ def find_books_by_genre(books: List[Dict[str, Any]], genre: str) -> List[Dict[st
     # Expected: compare normalized strings using .lower()
     return [
         book for book in books
-        if genre in book.get("genres", []).strip().lower()
+        if genre in book.get("genres", [])
     ]
 
 
@@ -65,13 +65,13 @@ def find_books_by_author(books: List[Dict[str, Any]], author_query: str) -> List
     """
     Find all books whose author contains the query string (case-insensitive substring match).
     """
-    if not author_query or not author_query.strip().lower():
+    if not author_query or not author_query.strip().lower:
         return []
 
     target = author_query.strip().lower()
     return [
         book for book in books
-        if target in book.get("author", "").lower().strip() #.strip().lower():
+        if target in book.get("author", "").lower()
     ]
 
 
